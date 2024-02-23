@@ -48,9 +48,14 @@ export class AppComponent {
   private readonly _shyftApiService = inject(ShyftApiService);
   private readonly _walletStore = inject(WalletStore);
   private readonly _publicKey = toSignal(this._walletStore.publicKey$);
+  private readonly _mint = 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v';
 
   readonly account = computedAsync(
-    () => this._shyftApiService.getAccount(this._publicKey()?.toBase58()),
+    () =>
+      this._shyftApiService.getAccount(
+        this._publicKey()?.toBase58(),
+        this._mint,
+      ),
     { requireSync: true },
   );
 }

@@ -6,11 +6,8 @@ import { map, of } from 'rxjs';
 export class ShyftApiService {
   private readonly _httpClient = inject(HttpClient);
   private readonly _header = { 'x-api-key': 'VaqDrjcDa7lmeCSF' };
-  private readonly _mint = 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v';
 
-  // https://devnet-rpc.shyft.to?api_key=VaqDrjcDa7lmeCSF
-
-  getAccount(publicKey: string | undefined | null) {
+  getAccount(publicKey: string | undefined | null, mint: string) {
     if (!publicKey) {
       return of(null);
     }
@@ -20,7 +17,7 @@ export class ShyftApiService {
     );
     url.searchParams.append('network', 'mainnet-beta');
     url.searchParams.append('wallet', publicKey);
-    url.searchParams.append('token', this._mint);
+    url.searchParams.append('token', mint);
 
     return this._httpClient
       .get<{
