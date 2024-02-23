@@ -29,4 +29,21 @@ export class ShyftApiService {
       }>(url.toString(), { headers: this._header })
       .pipe(map((response) => response.result));
   }
+
+  getTransactions(publicKey: string | undefined | null, network: string) {
+    if (!publicKey) {
+      return of([]);
+    }
+
+    const url: URL = new URL('https://api.shyft.to/sol/v1/transaction/history');
+    url.searchParams.append('network', network);
+    url.searchParams.append('account', publicKey);
+    url.searchParams.append('tx_num', '5');
+
+    return this._httpClient
+      .get<{
+        result: { status: string; type: string; timestamp: string }[];
+      }>(url.toString(), { headers: this._header })
+      .pipe(map((response) => response.result));
+  }
 }
