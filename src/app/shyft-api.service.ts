@@ -7,7 +7,11 @@ export class ShyftApiService {
   private readonly _httpClient = inject(HttpClient);
   private readonly _header = { 'x-api-key': 'VaqDrjcDa7lmeCSF' };
 
-  getAccount(publicKey: string | undefined | null, mint: string) {
+  getAccount(
+    publicKey: string | undefined | null,
+    network: string,
+    mint: string,
+  ) {
     if (!publicKey) {
       return of(null);
     }
@@ -15,7 +19,7 @@ export class ShyftApiService {
     const url: URL = new URL(
       'https://api.shyft.to/sol/v1/wallet/token_balance',
     );
-    url.searchParams.append('network', 'mainnet-beta');
+    url.searchParams.append('network', network);
     url.searchParams.append('wallet', publicKey);
     url.searchParams.append('token', mint);
 

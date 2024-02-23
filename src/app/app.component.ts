@@ -46,6 +46,7 @@ import { ShyftApiService } from './shyft-api.service';
 })
 export class AppComponent {
   private readonly _shyftApiService = inject(ShyftApiService);
+  private readonly _network = 'mainnet-beta';
   private readonly _walletStore = inject(WalletStore);
   private readonly _publicKey = toSignal(this._walletStore.publicKey$);
   private readonly _mint = 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v';
@@ -54,6 +55,7 @@ export class AppComponent {
     () =>
       this._shyftApiService.getAccount(
         this._publicKey()?.toBase58(),
+        this._network,
         this._mint,
       ),
     { requireSync: true },
